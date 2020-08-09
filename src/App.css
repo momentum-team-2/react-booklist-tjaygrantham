@@ -1,3 +1,24 @@
-.App {
-  margin: 5px 0 0 5px;
+.grow {
+  transition: none;
+}
+
+.grow:hover {
+  animation: grow 0.25s;
+}
+
+@keyframes grow {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+.grow:active {
+  transform: none;
+}
+
+.noselect {
+  -webkit-user-select: none;
 }
