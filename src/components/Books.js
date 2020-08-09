@@ -114,6 +114,8 @@ class Books extends React.Component {
           if (response.status !== 200) {
             this.move(this.state[destinationId], this.state[sourceId], destination, source)
           }
+        }).catch(error => {
+          error && this.move(this.state[destinationId], this.state[sourceId], destination, source)
         })
         this.move(this.state[sourceId], this.state[destinationId], source, destination)
       }
@@ -149,7 +151,7 @@ class Books extends React.Component {
           <div>
             <label
               type='button'
-              className={`b ml2 ph3 pv3 input-reset noselect ba b--black grow pointer f7 dib w4 tc noselect ${adding ? 'bg-black' : 'bg-transparent'} ${adding ? 'white' : 'black'}`}
+              className={`b ml2 ph3 pv3 input-reset ba b--black grow pointer f7 dib w4 tc noselect ${adding ? 'bg-black' : 'bg-transparent'} ${adding ? 'white' : 'black'}`}
               onClick={(e) => {
                 this.setState({
                   adding: !adding,

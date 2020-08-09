@@ -5,6 +5,7 @@ import SignUp from './components/SignUp'
 import Logout from './components/Logout'
 import Home from './components/Home'
 import AddBook from './components/AddBook'
+import ViewBook from './components/ViewBook'
 import 'tachyons'
 import './App.css'
 
@@ -82,6 +83,9 @@ class App extends React.Component {
           <Switch>
             <Route path='/home'>
               <Home setAuthorization={this.setAuthorization} authorization={this.state.authorization} />
+            </Route>
+            <Route path='/book/:bookId'>
+              <ViewBook authorization={this.state.authorization} />
             </Route>
             <Route path='/book/add'>
               <AddBook authorization={this.state.authorization} />

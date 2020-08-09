@@ -30,6 +30,10 @@ export default function Book (props) {
             color: deleting ? 'red' : 'black',
             ...provided.draggableProps.style
           }}
+          onDoubleClick={(e) => {
+            history.push(`/book/${book._id}`)
+            history.go()
+          }}
         >
           <div className='Book tl'>
             <h4 className='ml2 mt1 mb0'><FontAwesomeIcon className='pr2' icon={faBook} />{props.book.title}</h4>
