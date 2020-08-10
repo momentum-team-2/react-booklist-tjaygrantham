@@ -37,7 +37,7 @@ export default function ViewBook (props) {
     }).finally(() => {
       setLoading(false)
     })
-  })
+  }, [bookId, history, props.authorization])
 
   function saveBook () {
     setLoading(true)
