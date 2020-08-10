@@ -18,7 +18,8 @@ class Books extends React.Component {
       read: [],
       adding: false,
       deleting: false,
-      loading: true
+      loading: true,
+      error: null
     }
     this.handleDragEnd = this.handleDragEnd.bind(this)
     this.reloadBooks = this.reloadBooks.bind(this)
@@ -75,6 +76,10 @@ class Books extends React.Component {
       if (error.response && error.response.status === 401) {
         history.push('/logout')
         history.go()
+      } else {
+        this.setState({
+          error: error.message
+        })
       }
     }).finally(() => {
       this.setState({
@@ -146,37 +151,45 @@ class Books extends React.Component {
     }
     return (
       <div className='Books'>
-        <div className='flex flex-column items-center justify-center'>
-          <h2>Books</h2>
-          <div>
-            <label
-              type='button'
-              className={`b ml2 ph3 pv3 input-reset ba b--black grow pointer f7 dib w4 tc noselect ${adding ? 'bg-black' : 'bg-transparent'} ${adding ? 'white' : 'black'}`}
-              onClick={(e) => {
-                this.setState({
-                  adding: !adding,
-                  deleting: false
-                })
-              }}
-            >
-              <FontAwesomeIcon className='pr2' icon={adding ? faChevronLeft : faPlus} />
-              {adding ? 'Back to Books' : 'Add Book'}
-            </label>
-            <label
-              type='button'
-              className={`b ml2 ph3 pv3 input-reset ba b--black grow pointer f7 dib w4 tc noselect ${deleting ? 'bg-black' : 'bg-transparent'} ${deleting ? 'white' : 'black'}`}
-              onClick={(e) => {
-                this.setState({
-                  deleting: adding ? false : !deleting
-                })
-              }}
-            >
-              <FontAwesomeIcon className='pr2' icon={faTrashAlt} />
-              {deleting ? 'Stop Deleting' : 'Delete Books'}
-            </label>
-          </div>
-          {adding ? <AddBook reloadBooks={this.reloadBooks} authorization={this.props.authorization} /> : dndContext}
-        </div>
+        {
+          !this.state.error
+            ? (
+              <div className='flex flex-column items-center justify-center'>
+                <h2>Books</h2>
+                <div>
+                  <label
+                    type='button'
+                    className={`b ml2 ph3 pv3 input-reset ba b--black grow pointer f7 dib w4 tc noselect ${adding ? 'bg-black' : 'bg-transparent'} ${adding ? 'white' : 'black'}`}
+                    onClick={(e) => {
+                      this.setState({
+                        adding: !adding,
+                        deleting: false
+                      })
+                    }}
+                  >
+                    <FontAwesomeIcon className='pr2' icon={adding ? faChevronLeft : faPlus} />
+                    {adding ? 'Back to Books' : 'Add Book'}
+                  </label>
+                  <label
+                    type='button'
+                    className={`b ml2 ph3 pv3 input-reset ba b--black grow pointer f7 dib w4 tc noselect ${deleting ? 'bg-black' : 'bg-transparent'} ${deleting ? 'white' : 'black'}`}
+                    onClick={(e) => {
+                      this.setState({
+                        deleting: adding ? false : !deleting
+                      })
+                    }}
+                  >
+                    <FontAwesomeIcon className='pr2' icon={faTrashAlt} />
+                    {deleting ? 'Stop Deleting' : 'Delete Books'}
+                  </label>
+                </div>
+                {adding ? <AddBook reloadBooks={this.reloadBooks} authorization={this.props.authorization} /> : dndContext}
+              </div>
+            )
+            : (
+              <p className='red tc'>{this.state.error}</p>
+            )
+        }
       </div>
     )
   }
